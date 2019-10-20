@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class RotationController : MonoBehaviour
+public class RotationController : NetworkBehaviour
 {
     public float SENS_HOR = 3.0F;
     public float SENS_VER = 2.0F;
