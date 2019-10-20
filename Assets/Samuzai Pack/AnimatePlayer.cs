@@ -6,6 +6,7 @@ public class AnimatePlayer : MonoBehaviour
 {
     Animator charAnim;
     private bool walkState = false;
+    public bool activated;
 
     // Use this for initialization
     void Start () {
@@ -15,26 +16,39 @@ public class AnimatePlayer : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        float mvY = Input.GetAxis("Horizontal");
-        float mvX = Input.GetAxis("Vertical");
+        if (activated)
+        {
+            float mvY = Input.GetAxis("Horizontal");
+            float mvX = Input.GetAxis("Vertical");
 
-        if ( mvX != 0 || mvY != 0)
-        {
-            if (walkState == false)
+            if (mvX != 0 || mvY != 0)
             {
-                charAnim.SetTrigger("walk");
-                walkState = true;
-                //Debug.Log("Set to walk");  
+                if (walkState == false)
+                {
+                    charAnim.SetTrigger("walk");
+                    walkState = true;
+                    //Debug.Log("Set to walk");  
+                }
             }
-        }
-        else
-        {
-            if (walkState == true)
+            else
             {
-                charAnim.SetTrigger("stop");
-                walkState = false;
-                //Debug.Log("Set to stop");
+                if (walkState == true)
+                {
+                    charAnim.SetTrigger("stop");
+                    walkState = false;
+                    //Debug.Log("Set to stop");
+                }
             }
         }
     }
+
+    public void Activate()
+    {
+        activated = true;
+    }
+    public void Deactivate()
+    {
+        activated = false;
+    }
+
 }
