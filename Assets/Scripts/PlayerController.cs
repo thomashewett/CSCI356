@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
+
     public float SPEED = 5.0F;
     public bool activated = true;
 
@@ -18,10 +20,23 @@ public class PlayerController : MonoBehaviour
     {
         if (activated)
         {
-            float mvX = (Input.GetAxis("Horizontal") * Time.deltaTime * SPEED);
-            float mvZ = Input.GetAxis("Vertical") * Time.deltaTime * SPEED;
+            if (isLocalPlayer)
+        {
+            this.transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = true;
+        } else
+        {
+            this.transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = false;
+        }
 
-            transform.Translate(mvX, 0, mvZ);
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
+        float mvX = (Input.GetAxis("Horizontal") * Time.deltaTime * SPEED);
+        float mvZ = Input.GetAxis("Vertical") * Time.deltaTime * SPEED;
+
+        transform.Translate(mvX, 0, mvZ);
         }
     }
 
