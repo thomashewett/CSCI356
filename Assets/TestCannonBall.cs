@@ -12,7 +12,7 @@ public class TestCannonBall : MonoBehaviour {
         GameObject hit = collision.gameObject;
         Health health = hit.GetComponent<Health>();
 
-        if(invincible == true)
+        if(invincible == false)
         {
             if (health != null)
             {
