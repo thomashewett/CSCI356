@@ -9,11 +9,26 @@ public class Health : NetworkBehaviour {
     [SyncVar]public int currentHealth = maxHealth;
     private NetworkStartPosition[] spawnPoints;
 
+    public float timer = 0.0f;
+
     void Start()
     {
         if (isLocalPlayer)
         {
             spawnPoints = FindObjectsOfType<NetworkStartPosition>();
+        }
+
+        //Get the Renderer component from the new cube
+        var renderer = this.transform.GetChild(2).gameObject.GetComponent<Renderer>();
+
+        timer += Time.deltaTime;
+        if (timer >= 0.0001f)//change the float value here to change how long it takes to switch.
+        {
+            // pick a random color
+            Vector4 color = new Vector4(Random.value, Random.value, Random.value, 1.0f);
+            // apply it on current object's material
+            renderer.material.SetColor("_Color", color);
+            timer = 0;
         }
     }
 
@@ -46,5 +61,18 @@ public class Health : NetworkBehaviour {
 
             transform.position = spawnPoint;
         }
+
+       /* //Get the Renderer component from the new cube
+        var renderer = this.transform.GetChild(2).gameObject.GetComponent<Renderer>();
+
+        timer += Time.deltaTime;
+        if (timer >= 0.0001f)//change the float value here to change how long it takes to switch.
+        {
+            // pick a random color
+            Vector4 color = new Vector4(Random.value, Random.value, Random.value, 1.0f);
+            // apply it on current object's material
+            renderer.material.SetColor("_Color", color);
+            timer = 0;
+        }*/
     }
 }
