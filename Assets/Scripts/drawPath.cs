@@ -8,6 +8,7 @@ public class drawPath : MonoBehaviour
     private LineRenderer myline;
     public GameObject hitLocation;
     public float ballVelocity;
+    public bool activated;
 
     Rigidbody cannon3D;
     RaycastHit hit;
@@ -31,33 +32,38 @@ public class drawPath : MonoBehaviour
         myline = this.GetComponent<LineRenderer>();
         cannon3D = this.GetComponent<Rigidbody>();
 
-        velociiity = cannon3D.transform.forward * ballVelocity;
-
-        plotline = Plot(cannon3D, cannon3D.position, velociiity, 400);
-
-        myline.SetPositions(plotline);
-
-        Vector3[] collisionlist = new Vector3[400];
-
-        //plotline.CopyTo(collisionlist,0);
-
-        
-        if (collisionlist.Length > 20)
+        if (activated)
         {
-            for (int i = 0; i < collisionlist.Length-1; i++)
-            {
-                collisionlist[i] = plotline[i];
-                collisionlist[i+1] = plotline[i+1];
-                Ray pointRay = new Ray(collisionlist[i], collisionlist[i + 1] - collisionlist[i]);
-                if (Physics.Raycast(pointRay, out hit, 1f))
-                {
-                    hitLocation.transform.position = hit.transform.position;
-                    Debug.Log("Hit");
-                }
-            }
+            myline.enabled = true;
+            velociiity = cannon3D.transform.forward * ballVelocity;
 
+            plotline = Plot(cannon3D, cannon3D.position, velociiity, 400);
+
+            myline.SetPositions(plotline);
+
+            Vector3[] collisionlist = new Vector3[400];
+
+
+
+            if (collisionlist.Length > 20)
+            {
+                for (int i = 0; i < collisionlist.Length - 1; i++)
+                {
+                    collisionlist[i] = plotline[i];
+                    collisionlist[i + 1] = plotline[i + 1];
+                    Ray pointRay = new Ray(collisionlist[i], collisionlist[i + 1] - collisionlist[i]);
+                    if (Physics.Raycast(pointRay, out hit, 1f))
+                    {
+                        hitLocation.transform.position = hit.point;
+                        break;
+                    }
+                }
+
+            }
         }
-        
+        else
+            myline.enabled = false;
+
     }
 
     public static Vector3[] Plot(Rigidbody rigidbody, Vector3 pos, Vector3 velocity, int steps)
@@ -80,5 +86,14 @@ public class drawPath : MonoBehaviour
         return results;
     }
 
+
+    public void Activate()
+    {
+        activated = true;
+    }
+    public void Deactivate()
+    {
+        activated = false;
+    }
 }
 

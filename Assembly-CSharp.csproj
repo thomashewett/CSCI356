@@ -59,6 +59,7 @@
      <Compile Include="Assets\GameManager.cs" />
      <Compile Include="Assets\Health.cs" />
      <Compile Include="Assets\LowPolyWater_Pack\Scripts\LowPolyWater.cs" />
+     <Compile Include="Assets\MaddieAssets\enemyRun.cs" />
      <Compile Include="Assets\PlaneMove.cs" />
      <Compile Include="Assets\PlayerController.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
@@ -79,6 +80,7 @@
      <Compile Include="Assets\Scripts\CannonUIScript.cs" />
      <Compile Include="Assets\Scripts\DestroyCannonball.cs" />
      <Compile Include="Assets\Scripts\drawPath.cs" />
+     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
      <Compile Include="Assets\Scripts\GunShoot.cs" />
      <Compile Include="Assets\Scripts\MoveToMouse.cs" />
      <Compile Include="Assets\Scripts\NavAgentScript.cs" />

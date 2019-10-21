@@ -434,11 +434,11 @@ GameObject:
   - component: {fileID: 114499392448081726}
   - component: {fileID: 114352813820995166}
   - component: {fileID: 114850219579745254}
-  - component: {fileID: 114584966088170224}
   - component: {fileID: 114706741330904870}
+  - component: {fileID: 114258005889602424}
   m_Layer: 0
   m_Name: player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1980,6 +1980,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SENS_HOR: 3
   SENS_VER: 2
+--- !u!114 &114258005889602424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1449159536333236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a949672ef4a73149b2d4dbd5e5449a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1449159536333236}
+  cannon: {fileID: 0}
 --- !u!114 &114261200091510292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2037,27 +2050,6 @@ MonoBehaviour:
   currentHealth: 1
   timer: 0
 --- !u!114 &114499392448081726
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1449159536333236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 3
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
---- !u!114 &114584966088170224
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}

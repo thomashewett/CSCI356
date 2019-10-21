@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 
-public class CannonScript : MonoBehaviour
+public class CannonScript : NetworkBehaviour
 {
     public float SENS_HOR = 3.0F;
     public float SENS_VER = 2.0F;
@@ -19,16 +20,26 @@ public class CannonScript : MonoBehaviour
 
     public double nextFire = 0.0;
     public float chargeCounter = 0;
-    public float chargeRate = 1;
+    public float chargeRate = 5;
+    public float period;
+    public float timeInterval;
+
+    public float speed;
 
     public bool activated;
     public float initialForce = 15;
+
+    public GameObject Target;
+    public GameObject[] TargetObjects;
 
     // Start is called before the first frame update
     void Start()
     {
         initialForce = 15;
         chargeRate = 0.5f;
+        speed = 0;
+        period = 0.1f;
+        timeInterval = 0.2f;
     }
 
     // Update is called once per frame
@@ -43,22 +54,34 @@ public class CannonScript : MonoBehaviour
             float mvZ = Input.GetAxis("Vertical") * Time.deltaTime * cannonSpeedVertical;
 
             ballVelocity += mvZ;
-            /*
-            if (Input.GetButtonDown("Fire1"))
-            {
-                Rigidbody clone = Instantiate(cannonballInstance, transform.position, transform.rotation);
-                clone.AddForce(transform.forward * initialForce, ForceMode.Impulse);
-            }
-            */
         }
+        else
+            AIControl();
 
 
     }
 
+    public void AIControl()
+    {
+        if (period > timeInterval)
+        {
+            ballVelocity = Random.Range(10f, 30f);
+            period = 0;
+            timeInterval = Random.Range(0.1f, 1f);
+            ballVelocity = Random.Range(5f, 30f);
+            ballSize = Random.Range(20f, 60f);
+            Rigidbody clone = Instantiate(cannonballInstance, transform.position, transform.rotation);
+            clone.transform.localScale = new Vector3(0.5f + ballSize / 20, 0.5f + ballSize / 20, 0.5f + ballSize / 20);
+            clone.AddForce(transform.forward * ballVelocity, ForceMode.Impulse);
+        }
+        period += Time.deltaTime;
+    }
+
+    //[Command]
     public void Shoot()
     {
         if (Input.GetButton("Fire1"))
-        {       
+        {
 
             if (chargeCounter >= 100)
             {
@@ -66,10 +89,10 @@ public class CannonScript : MonoBehaviour
 
             }
 
-            if(ballSize <= 100)
+            if (ballSize <= 100)
             {
                 chargeCounter++;
-                ballSize = 1+chargeCounter*chargeRate;
+                ballSize = 1 + chargeCounter * chargeRate;
 
             }
         }
@@ -86,18 +109,24 @@ public class CannonScript : MonoBehaviour
             if (Time.time > nextFire)
             {
                 Rigidbody clone = Instantiate(cannonballInstance, transform.position, transform.rotation);
-                clone.transform.localScale = new Vector3(0.5f+ballSize/20, 0.5f+ballSize/20, 0.5f+ballSize/20);
+                //GameObject clone = (GameObject)Instantiate(cannonballInstance, transform.position, transform.rotation);
+                clone.transform.localScale = new Vector3(0.5f + ballSize / 20, 0.5f + ballSize / 20, 0.5f + ballSize / 20);
                 clone.AddForce(transform.forward * ballVelocity, ForceMode.Impulse);
                 nextFire = Time.time + fireRate;
+                //NetworkServer.Spawn(clone);
+
+
+//                GameObject bullet = (GameObject)Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+
+//                bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6.0f;
+
+//                NetworkServer.Spawn(bullet);
+
+               // Destroy(bullet, 2);
             }
             chargeCounter = 0;
             ballSize = 1;
         }
-    }
-
-    public void ScaleBall()
-    {
-
     }
 
     public void Activate()

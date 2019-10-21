@@ -13,10 +13,10 @@ public class Health : NetworkBehaviour {
 
     void Start()
     {
-        if (isLocalPlayer)
-        {
+        //if (isLocalPlayer)
+        //{
             spawnPoints = FindObjectsOfType<NetworkStartPosition>();
-        }
+        //}
 
         //Get the Renderer component from the new cube
         var renderer = this.transform.GetChild(2).gameObject.GetComponent<Renderer>();
@@ -50,8 +50,8 @@ public class Health : NetworkBehaviour {
     [ClientRpc]
     void RpcRespawn()
     {
-        if (isLocalPlayer)
-        {
+        //if (isLocalPlayer)
+        //{
             Vector3 spawnPoint = Vector3.zero;
 
             if (spawnPoints != null && spawnPoints.Length > 0)
@@ -60,7 +60,7 @@ public class Health : NetworkBehaviour {
             }
 
             transform.position = spawnPoint;
-        }
+        //}
 
        /* //Get the Renderer component from the new cube
         var renderer = this.transform.GetChild(2).gameObject.GetComponent<Renderer>();
